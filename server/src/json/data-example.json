@@ -1,0 +1,59 @@
+{
+    "etapa_processo_boleto": "simulacao",
+    "beneficiario": {
+        "id_beneficiario": ""
+    },
+    "dado_boleto": {
+        "tipo_boleto": "",
+        "texto_seu_numero": "",
+        "codigo_carteira": "",
+        "valor_total_titulo": "",
+        "codigo_especie": "",
+        "data_emissao": "",
+        "pagador": {
+            "pessoa": {
+                "nome_pessoa": "",
+                "tipo_pessoa": {
+                    "codigo_tipo_pessoa": "",
+                    "numero_cadastro_pessoa_fisica": ""
+                }
+            },
+            "endereco": {
+                "nome_logradouro": "",
+                "nome_bairro": "",
+                "nome_cidade": "",
+                "sigla_UF": "",
+                "numero_CEP": ""
+            }
+        },
+        "dados_individuais_boleto": [
+            {
+                "numero_nosso_numero": "",
+                "data_vencimento": "",
+                "valor_titulo": "",
+                "data_limite_pagamento": "",
+                "texto_uso_beneficiario": ""
+            }
+        ],
+        "lista_mensagem_cobranca": [
+            {
+                "mensagem": ""
+            },
+            {
+                "mensagem": ""
+            },
+            {
+                "mensagem": ""
+            },
+            {
+                "mensagem": ""
+            },
+            {
+                "mensagem": ""
+            }
+        ]
+    },
+    "dados_qrcode": {
+        "chave": ""
+    }
+}

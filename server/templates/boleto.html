@@ -1,0 +1,497 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Boleto Itaú</title>
+    <style>
+        * {
+            font-family: arial, verdana;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #container {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 5rem;
+        }
+
+        .qrcode {
+            width: 100px;
+            height: auto;
+        }
+
+        td.BoletoCodigoBanco {
+            font-size: 6mm;
+            font-family: arial, verdana;
+            font-weight: bold;
+            FONT-STYLE: italic;
+            text-align: center;
+            vertical-align: bottom;
+            border-bottom: 0.15mm solid #000000;
+            border-right: 0.15mm solid #000000;
+            padding-bottom: 1mm
+        }
+
+        td.BoletoLogo {
+            border-bottom: 0.15mm solid #000000;
+            border-right: 0.15mm solid #000000;
+            text-align: center;
+            height: 10mm
+        }
+
+        td.BoletoLinhaDigitavel {
+            font-size: 4 mm;
+            font-family: arial, verdana;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: bottom;
+            border-bottom: 0.15mm solid #000000;
+            padding-bottom: 1mm;
+        }
+
+        td.BoletoTituloEsquerdo {
+            font-size: 0.2cm;
+            font-family: arial, verdana;
+            padding-left: 0.15mm;
+            border-right: 0.15mm solid #000000;
+            text-align: left
+        }
+
+        td.BoletoTituloDireito {
+            font-size: 2mm;
+            font-family: arial, verdana;
+            padding-left: 0.15mm;
+            text-align: left
+        }
+
+        td.BoletoValorEsquerdo {
+            font-size: 3mm;
+            font-family: arial, verdana;
+            text-align: center;
+            border-right: 0.15mm solid #000000;
+            font-weight: bold;
+            border-bottom: 0.15mm solid #000000;
+            padding-top: 0.5mm
+        }
+
+        td.BoletoValorDireito {
+            font-size: 3mm;
+            font-family: arial, verdana;
+            text-align: right;
+            padding-right: 3mm;
+            padding-top: 0.8mm;
+            border-bottom: 0.15mm solid #000000;
+            font-weight: bold;
+        }
+
+        td.BoletoTituloSacado {
+            font-size: 2mm;
+            font-family: arial, verdana;
+            padding-left: 0.15mm;
+            vertical-align: top;
+            padding-top: 0.15mm;
+            text-align: left
+        }
+
+        td.BoletoValorSacado {
+            font-size: 3mm;
+            font-family: arial, verdana;
+            font-weight: bold;
+            text-align: left
+        }
+
+        td.BoletoTituloSacador {
+            font-size: 2mm;
+            font-family: arial, verdana;
+            padding-left: 0.15mm;
+            vertical-align: bottom;
+            padding-bottom: 0.8mm;
+            border-bottom: 0.15mm solid #000000
+        }
+
+        td.BoletoValorSacador {
+            font-size: 3mm;
+            font-family: arial, verdana;
+            vertical-align: bottom;
+            padding-bottom: 0.15mm;
+            border-bottom: 0.15mm solid #000000;
+            font-weight: bold;
+            text-align: left
+        }
+
+        td.BoletoPontilhado {
+            border-top: 0.3mm dashed #000000;
+            font-size: 1mm
+        }
+
+        ul.BoletoInstrucoes {
+            font-size: 3mm;
+            font-family: verdana, arial
+        }
+
+        button {
+            width: 250px;
+            height: 35px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #00af06;
+            margin: 3rem 0rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        button:hover {
+            transition: .4s;
+            background-color: #007d04;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script>
+        const value = "{{ data.data.dado_boleto.dados_individuais_boleto[0].codigo_barras }}"
+
+        function generate() {
+            const mydoc = document.getElementById('container')
+            const download = document.getElementById('download_section')
+
+            mydoc.style.display = 'flex';
+            download.style.display = 'none';
+
+            JsBarcode("#barcode", value, {
+                format: "code128",
+                height: 50,
+                displayValue: true,
+                fontSize: 12
+            });
+
+            const element = document.getElementById('container');
+            var opt = {
+                margin: 0,
+                filename: 'boleto.pdf',
+                image: { type: 'png', quality: 0.20 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'p' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="download_section"
+        style="display: flex; flex-direction: column; width: 100vw; height: 100vh; align-items: center; justify-content: center; background-color: #e2e2e2;">
+        <img style="width: 70px; height: 70px; margin-bottom: 25px; font-weight: 700;"
+            src="https://i.ibb.co/B3mqDv5/logo.png" alt="logo" border="0">
+        <p style="width: 450px; text-align: center; color: #5c5c5c;">A geração do boleto vai te redirecionar para uma
+            outra página e também fará o download automático em 'downloads do seu computador.</p>
+        <button onclick="generate()">GERAR BOLETO</button>
+    </div>
+    <p align=center>
+    <table id="container" cellSpacing=0 cellPadding=0 border=0 class=Boleto>
+        <tr>
+            <td style='width: 1.2cm'></td>
+            <td style='width: 1cm'></td>
+            <td style='width: 1.9cm'></td>
+
+            <td style='width: 0.5cm'></td>
+            <td style='width: 1.3cm'></td>
+            <td style='width: 0.8cm'></td>
+            <td style='width: 1cm'></td>
+
+            <td style='width: 1.9cm'></td>
+            <td style='width: 1.9cm'></td>
+
+            <td style='width: 3.8cm'></td>
+
+            <td style='width: 3.8cm'></td>
+        </tr>
+        <tr>
+            <td style="display: flex;">
+                <img style="width: 125px; height: 125px; margin-bottom: 25px;"
+                    src="data:image/png;base64,{{ data.data.dados_qrcode.base64 }}" alt="QrCode">
+            </td>
+        </tr>
+        <tr>
+            <td colspan=11 class=BoletoPontilhado>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan=4 class=BoletoLogo>
+                <img style="margin-right: 20px; width: 35px; height: 35px;" src="https://i.ibb.co/B3mqDv5/logo.png" alt="logo" border="0">
+                Itaú S.A.
+            </td>
+            <td colspan=2 class=BoletoCodigoBanco>341-7</td>
+            <td colspan=6 class=BoletoLinhaDigitavel>{{
+                data.data.dado_boleto.dados_individuais_boleto[0].numero_linha_digitavel }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoTituloEsquerdo>Local de Pagamento</td>
+            <td class=BoletoTituloDireito>Vencimento</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>
+                ATÉ O VENCIMENTO EM QUALQUER BANCO OU CORRESPONDENTE NÃO BANCÁRIO.
+            </td>
+            <td class=BoletoValorDireito>{{ data.data.dado_boleto.dados_individuais_boleto[0].data_vencimento }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoTituloEsquerdo>Cedente</td>
+            <td class=BoletoTituloDireito>Agência/Código do Cedente</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>{{
+                data.data.beneficiario.nome_cobranca }}</td>
+            <td class=BoletoValorDireito></td>
+        </tr>
+        <tr>
+            <td colspan=3 class=BoletoTituloEsquerdo>Data do Documento</td>
+            <td colspan=4 class=BoletoTituloEsquerdo>Número do Documento</td>
+            <td class=BoletoTituloEsquerdo>Espécie</td>
+            <td class=BoletoTituloEsquerdo>Aceite</td>
+            <td class=BoletoTituloEsquerdo>Data do Processamento</td>
+            <td class=BoletoTituloDireito>Nosso Número</td>
+        </tr>
+        <tr>
+            <td colspan=3 class=BoletoValorEsquerdo>{{ data.data.dado_boleto.data_emissao }}</td>
+            <td colspan=4 class=BoletoValorEsquerdo></td>
+            <td class=BoletoValorEsquerdo>{{ data.data.dado_boleto.codigo_especie }}</td>
+            <td class=BoletoValorEsquerdo>N</td>
+            <td class=BoletoValorEsquerdo>{{ data.data.dado_boleto.data_emissao }}</td>
+            <td class=BoletoValorDireito>{{ data.data.dado_boleto.dados_individuais_boleto[0].numero_nosso_numero }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan=3 class=BoletoTituloEsquerdo>Uso do Banco</td>
+            <td colspan=2 class=BoletoTituloEsquerdo>Carteira</td>
+            <td colspan=2 class=BoletoTituloEsquerdo>Moeda</td>
+            <td colspan=2 class=BoletoTituloEsquerdo>Quantidade</td>
+            <td class=BoletoTituloEsquerdo>(x) Valor</td>
+            <td class=BoletoTituloDireito>(=) Valor do Documento</td>
+        </tr>
+        <tr>
+            <td colspan=3 class=BoletoValorEsquerdo>&nbsp;</td>
+            <td colspan=2 class=BoletoValorEsquerdo>{{ data.data.dado_boleto.codigo_carteira }}</td>
+            <td colspan=2 class=BoletoValorEsquerdo>R$</td>
+            <td colspan=2 class=BoletoValorEsquerdo>&nbsp;</td>
+            <td class=BoletoValorEsquerdo>&nbsp;</td>
+            <td class=BoletoValorDireito>{{ data.data.dado_boleto.dados_individuais_boleto[0].valor_titulo }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoTituloEsquerdo>Instruções</td>
+            <td class=BoletoTituloDireito>(-) Desconto</td>
+        </tr>
+        <tr>
+            <td colspan=10 rowspan=9 class=BoletoValorEsquerdo
+                style='text-align: left; vertical-align:top; padding-left : 0.1cm'>
+                {% for item in data.data.dado_boleto.dados_individuais_boleto[0].lista_mensagens_cobranca %}
+                <p style="font-size: 0.7rem;">{{ item.mensagem }}</p>
+                {% endfor %}
+            </td>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=BoletoTituloDireito>(-) Outras Deduções/Abatimento</td>
+        </tr>
+        <tr>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=BoletoTituloDireito>(+) Mora/Multa/Juros</td>
+        </tr>
+        <tr>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=BoletoTituloDireito>(+) Outros Acréscimos</td>
+        </tr>
+        <tr>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=BoletoTituloDireito>(=) Valor Cobrado</td>
+        </tr>
+        <tr>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td rowspan=3 Class=BoletoTituloSacado>Sacado:</td>
+            <td colspan=8 Class=BoletoValorSacado>{{ data.data.dado_boleto.pagador.pessoa.nome_pessoa }}</td>
+            <td colspan=2 Class=BoletoValorSacado>{{
+                data.data.dado_boleto.pagador.pessoa.tipo_pessoa.numero_cadastro_pessoa_fisica }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 Class=BoletoValorSacado>{{ data.data.dado_boleto.pagador.endereco.nome_logradouro}}, {{
+                data.data.dado_boleto.pagador.endereco.nome_bairro }} - {{
+                data.data.dado_boleto.pagador.endereco.nome_cidade }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 Class=BoletoValorSacado>{{ data.data.dado_boleto.pagador.endereco.sigla_UF
+                }}&nbsp;&nbsp;&nbsp;{{ data.data.dado_boleto.pagador.endereco.numero_CEP }}</td>
+        </tr>
+        <tr>
+            <td colspan=2 Class=BoletoTituloSacador>Sacador / Avalista:</td>
+            <td colspan=9 Class=BoletoValorSacador>{{ data.data.beneficiario.nome_cobranca }}</td>
+        </tr>
+        <tr>
+            <td colspan=11 class=BoletoTituloDireito style='text-align: right; padding-right: 0.1cm'>Recibo do Sacado -
+                Autenticação Mecânica</td>
+        </tr>
+        <tr>
+            <td colspan=11 height=60 valign=top>&nbsp</td>
+        </tr>
+        <tr>
+            <td colspan=11 class=BoletoPontilhado>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan=4 class=BoletoLogo>
+                <img style="margin-right: 15px; width: 35px; height: 35px;" src="https://i.ibb.co/B3mqDv5/logo.png" alt="logo" border="0">
+                Itaú S.A.
+            </td>
+            <td colspan=2 class=BoletoCodigoBanco>341-7</td>
+            <td colspan=6 class=BoletoLinhaDigitavel>{{
+                data.data.dado_boleto.dados_individuais_boleto[0].numero_linha_digitavel }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoTituloEsquerdo>Local de Pagamento</td>
+            <td class=BoletoTituloDireito>Vencimento</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>
+                ATÉ O VENCIMENTO EM QUALQUER BANCO OU CORRESPONDENTE NÃO BANCÁRIO.
+            </td>
+            <td class=BoletoValorDireito>{{ data.data.dado_boleto.dados_individuais_boleto[0].data_vencimento }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoTituloEsquerdo>Cedente</td>
+            <td class=BoletoTituloDireito>Agência/Código do Cedente</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>{{
+                data.data.beneficiario.nome_cobranca }}</td>
+            <td class=BoletoValorDireito></td>
+        </tr>
+        <tr>
+            <td colspan=3 class=BoletoTituloEsquerdo>Data do Documento</td>
+            <td colspan=4 class=BoletoTituloEsquerdo>Número do Documento</td>
+            <td class=BoletoTituloEsquerdo>Espécie</td>
+            <td class=BoletoTituloEsquerdo>Aceite</td>
+            <td class=BoletoTituloEsquerdo>Data do Processamento</td>
+            <td class=BoletoTituloDireito>Nosso Número</td>
+        </tr>
+        <tr>
+            <td colspan=3 class=BoletoValorEsquerdo>{{ data.data.dado_boleto.data_emissao }}</td>
+            <td colspan=4 class=BoletoValorEsquerdo></td>
+            <td class=BoletoValorEsquerdo>{{ data.data.dado_boleto.codigo_especie }}</td>
+            <td class=BoletoValorEsquerdo>N</td>
+            <td class=BoletoValorEsquerdo>{{ data.data.dado_boleto.data_emissao }}</td>
+            <td class=BoletoValorDireito>{{ data.data.dado_boleto.dados_individuais_boleto[0].numero_nosso_numero }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan=3 class=BoletoTituloEsquerdo>Uso do Banco</td>
+            <td colspan=2 class=BoletoTituloEsquerdo>Carteira</td>
+            <td colspan=2 class=BoletoTituloEsquerdo>Moeda</td>
+            <td colspan=2 class=BoletoTituloEsquerdo>Quantidade</td>
+            <td class=BoletoTituloEsquerdo>(x) Valor</td>
+            <td class=BoletoTituloDireito>(=) Valor do Documento</td>
+        </tr>
+        <tr>
+            <td colspan=3 class=BoletoValorEsquerdo>&nbsp;</td>
+            <td colspan=2 class=BoletoValorEsquerdo>{{ data.data.dado_boleto.codigo_carteira }}</td>
+            <td colspan=2 class=BoletoValorEsquerdo>R$</td>
+            <td colspan=2 class=BoletoValorEsquerdo>&nbsp;</td>
+            <td class=BoletoValorEsquerdo>&nbsp;</td>
+            <td class=BoletoValorDireito>{{ data.data.dado_boleto.dados_individuais_boleto[0].valor_titulo }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 class=BoletoTituloEsquerdo>Instruções</td>
+            <td class=BoletoTituloDireito>(-) Desconto</td>
+        </tr>
+        <tr>
+            <td colspan=10 rowspan=9 class=BoletoValorEsquerdo
+                style='text-align: left; vertical-align:top; padding-left : 0.1cm'>
+                {% for item in data.data.dado_boleto.dados_individuais_boleto[0].lista_mensagens_cobranca %}
+                <p style="font-size: 0.7rem;">{{ item.mensagem }}</p>
+                {% endfor %}
+            </td>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=BoletoTituloDireito>(-) Outras Deduções/Abatimento</td>
+        </tr>
+        <tr>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=BoletoTituloDireito>(+) Mora/Multa/Juros</td>
+        </tr>
+        <tr>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=BoletoTituloDireito>(+) Outros Acréscimos</td>
+        </tr>
+        <tr>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=BoletoTituloDireito>(=) Valor Cobrado</td>
+        </tr>
+        <tr>
+            <td class=BoletoValorDireito>&nbsp;</td>
+        </tr>
+        <tr>
+            <td rowspan=3 Class=BoletoTituloSacado>Sacado:</td>
+            <td colspan=8 Class=BoletoValorSacado>{{ data.data.dado_boleto.pagador.pessoa.nome_pessoa }}</td>
+            <td colspan=2 Class=BoletoValorSacado>{{
+                data.data.dado_boleto.pagador.pessoa.tipo_pessoa.numero_cadastro_pessoa_fisica }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 Class=BoletoValorSacado>{{ data.data.dado_boleto.pagador.endereco.nome_logradouro}}, {{
+                data.data.dado_boleto.pagador.endereco.nome_bairro }} - {{
+                data.data.dado_boleto.pagador.endereco.nome_cidade }}</td>
+        </tr>
+        <tr>
+            <td colspan=10 Class=BoletoValorSacado>{{
+                data.data.dado_boleto.pagador.endereco.sigla_UF}}&nbsp;&nbsp;&nbsp;{{
+                data.data.dado_boleto.pagador.endereco.numero_CEP }}</td>
+        </tr>
+        <tr>
+            <td colspan=2 Class=BoletoTituloSacador>Sacador / Avalista:</td>
+            <td colspan=9 Class=BoletoValorSacador>{{ data.data.beneficiario.nome_cobranca }}</td>
+        </tr>
+        <tr>
+            <td colspan=11 class=BoletoTituloDireito style='text-align: right; padding-right: 0.1cm'>Ficha de
+                Compensação -
+                Autenticação Mecânica</td>
+        </tr>
+        <tr>
+            <td colspan=11 height=60 valign=top>
+                <svg id="barcode"></svg>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=11 class=BoletoPontilhado>&nbsp;</td>
+        </tr>
+    </table>
+    </p>
+</body>
+
+</html>
