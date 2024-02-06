@@ -14,6 +14,13 @@ const { API_INVOICE } = process.env;
 const certPath = resolve(__dirname, '../assets/certificate/CERTIFICATE.crt');
 const keyPath = resolve(__dirname, '../assets/key/ARQUIVO_CHAVE_PRIVADA.key');
 
+/**
+ * Creates an invoice using the provided payload and access token.
+ *
+ * @param {Object} payload - The payload for creating the invoice.
+ * @param {string} accessToken - The access token for authentication.
+ * @return {Object} The response data from the API.
+ */
 export async function createInvoiceWithAccessToken(payload, accessToken) {
     try {
         const url = API_INVOICE;
