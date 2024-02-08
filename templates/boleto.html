@@ -10,7 +10,205 @@
 </head>
 
 <body>
-    <h1>Boleto</h1>
+    <main class="boleto">
+        <div class="container">
+            <div class="pix-container">
+
+            </div>
+
+            <div class="boleto-container">
+                <div class="boleto-header">
+                    <article>
+                        <img class="boleto-logo" src="../public/imgs/logo-itau.png" alt="Logo Itaú">
+                        <p>Banco Itaú S.A.</p>
+                    </article>
+                    <article class="weight">
+                        341-7
+                    </article>
+                    <article class="end weight">
+                        RECIBO DO PAGADOR
+                    </article>
+                </div>
+                <div class="boleto-body">
+                    <div class="boleto-body-left">
+                        <article>
+                            Local de Pagamento: EM QUALQUER BANCO OU CORRESP. NAO BANCARIO
+                        </article>
+                        <article>
+                            Beneficiário: <%= data.beneficiario.nome_cobranca %>, CPF/CNPJ: <%=
+                                    data.beneficiario.tipo_pessoa.numero_cadastro_nacional_pessoa_juridica %>,
+                        </article>
+                        <article>
+                            Endereço Beneficiário / Beneficiário Final: <%= data.beneficiario.endereco.nome_logradouro
+                                %>
+                                <%= data.beneficiario.endereco.nome_bairro %>
+                                    <%= data.beneficiario.endereco.nome_cidade %>
+                                        <%= data.beneficiario.endereco.numero %> - <%=
+                                                data.beneficiario.endereco.sigla_UF %>
+                                                <%= data.beneficiario.endereco.numero_CEP %>
+                        </article>
+                        <div class="grid-1">
+                            <article class="">Data do documento: <%= data.dado_boleto.data_emissao %>
+                            </article>
+                            <article class="">No. Do documento</article>
+                            <article class="">Espécie doc. ME</article>
+                            <article class="">Aceite: A</article>
+                            <article>Data Processamento: <%= data.dado_boleto.data_emissao %>
+                            </article>
+                        </div>
+                        <div class="grid-2">
+                            <article class="">Uso do Banco</article>
+                            <article class="">Carteira: <%= data.dado_boleto.codigo_carteira %>
+                            </article>
+                            <article class="">Espécie: <%= data.dado_boleto.codigo_especie %>
+                            </article>
+                            <article class="">Quantidade</article>
+                            <article>Valor</article>
+                        </div>
+                        <section>
+                            <p>Instruções de responsabilidade do BENEFICIÁRIO. Qualquer dúvida sobre este boleto contate
+                                o beneficiário</p>
+                            <% data.dado_boleto.dados_individuais_boleto[0].lista_mensagens_cobranca.forEach(function(item)
+                                { %>
+                                <p>Item: <%= item.mensagem %>
+                                </p>
+                                <% }); %>
+                        </section>
+                    </div>
+                    <div class="boleto-body-right">
+                        <article>Vencimento: <%= data.dado_boleto.dados_individuais_boleto[0].data_vencimento %>
+                        </article>
+                        <article>Agência/Código Beneficiário</article>
+                        <article></article>
+                        <article>Nosso Número: <%= data.dado_boleto.dados_individuais_boleto[0].numero_nosso_numero %>
+                        </article>
+                        <article>(=) Valor do Documento: <%= data.dado_boleto.dados_individuais_boleto[0].valor_titulo
+                                %>
+                        </article>
+                        <article>(-) Descontos/Abatimento</article>
+                        <article></article>
+                        <article>(+) Mora/Multa</article>
+                        <article></article>
+                        <article>(=) Valor Cobrado</article>
+                    </div>
+                </div>
+                <div class="boleto-footer">
+                    <div class="col">
+                        <p>Pagador: <%= data.dado_boleto.pagador.pessoa.nome_pessoa %>
+                        </p>
+                        <p>Endereço: <%= data.dado_boleto.pagador.endereco.nome_logradouro %>
+                                <%= data.dado_boleto.pagador.endereco.nome_bairro %>
+                                    <%= data.dado_boleto.pagador.endereco.nome_cidade %>
+                                        <%= data.dado_boleto.pagador.endereco.sigla_UF %>
+                                            <%= data.dado_boleto.pagador.endereco.numero_CEP %>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p>CNPJ/CPF: <%= data.dado_boleto.pagador.pessoa.tipo_pessoa.numero_cadastro_pessoa_fisica %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boleto-division"></div>
+
+            <div class="boleto-container">
+                <div class="boleto-header">
+                    <article>
+                        <img class="boleto-logo" src="../public/imgs/logo-itau.png" alt="Logo Itaú">
+                        <p>Banco Itaú S.A.</p>
+                    </article>
+                    <article class="weight">
+                        341-7
+                    </article>
+                    <article class="end weight">
+                        <%= data.dado_boleto.dados_individuais_boleto[0].numero_linha_digitavel %>
+                    </article>
+                </div>
+                <div class="boleto-body">
+                    <div class="boleto-body-left">
+                        <article>
+                            Local de Pagamento: EM QUALQUER BANCO OU CORRESP. NAO BANCARIO
+                        </article>
+                        <article>
+                            Beneficiário: <%= data.beneficiario.nome_cobranca %>, CPF/CNPJ: <%=
+                                    data.beneficiario.tipo_pessoa.numero_cadastro_nacional_pessoa_juridica %>,
+                        </article>
+                        <article>
+                            Endereço Beneficiário / Beneficiário Final: <%= data.beneficiario.endereco.nome_logradouro
+                                %>
+                                <%= data.beneficiario.endereco.nome_bairro %>
+                                    <%= data.beneficiario.endereco.nome_cidade %>
+                                        <%= data.beneficiario.endereco.numero %> - <%=
+                                                data.beneficiario.endereco.sigla_UF %>
+                                                <%= data.beneficiario.endereco.numero_CEP %>
+                        </article>
+                        <div class="grid-1">
+                            <article class="">Data do documento: <%= data.dado_boleto.data_emissao %>
+                            </article>
+                            <article class="">No. Do documento</article>
+                            <article class="">Espécie doc. ME</article>
+                            <article class="">Aceite: A</article>
+                            <article>Data Processamento: <%= data.dado_boleto.data_emissao %>
+                            </article>
+                        </div>
+                        <div class="grid-2">
+                            <article class="">Uso do Banco</article>
+                            <article class="">Carteira: <%= data.dado_boleto.codigo_carteira %>
+                            </article>
+                            <article class="">Espécie: <%= data.dado_boleto.codigo_especie %>
+                            </article>
+                            <article class="">Quantidade</article>
+                            <article>Valor</article>
+                        </div>
+                        <section>
+                            <p>Instruções de responsabilidade do BENEFICIÁRIO. Qualquer dúvida sobre este boleto contate
+                                o beneficiário</p>
+                            <% data.dado_boleto.dados_individuais_boleto[0].lista_mensagens_cobranca.forEach(function(item)
+                                { %>
+                                <p>Item: <%= item.mensagem %>
+                                </p>
+                                <% }); %>
+                        </section>
+                    </div>
+                    <div class="boleto-body-right">
+                        <article>Vencimento: <%= data.dado_boleto.dados_individuais_boleto[0].data_vencimento %>
+                        </article>
+                        <article>Agência/Código Beneficiário</article>
+                        <article></article>
+                        <article>Nosso Número: <%= data.dado_boleto.dados_individuais_boleto[0].numero_nosso_numero %>
+                        </article>
+                        <article>(=) Valor do Documento: <%= data.dado_boleto.dados_individuais_boleto[0].valor_titulo
+                                %>
+                        </article>
+                        <article>(-) Descontos/Abatimento</article>
+                        <article></article>
+                        <article>(+) Mora/Multa</article>
+                        <article></article>
+                        <article>(=) Valor Cobrado</article>
+                    </div>
+                </div>
+                <div class="boleto-footer">
+                    <div class="col">
+                        <p>Pagador: <%= data.dado_boleto.pagador.pessoa.nome_pessoa %>
+                        </p>
+                        <p>Endereço: <%= data.dado_boleto.pagador.endereco.nome_logradouro %>
+                                <%= data.dado_boleto.pagador.endereco.nome_bairro %>
+                                    <%= data.dado_boleto.pagador.endereco.nome_cidade %>
+                                        <%= data.dado_boleto.pagador.endereco.sigla_UF %>
+                                            <%= data.dado_boleto.pagador.endereco.numero_CEP %>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p>CNPJ/CPF: <%= data.dado_boleto.pagador.pessoa.tipo_pessoa.numero_cadastro_pessoa_fisica %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boleto_barcode"></div>
+        </div>
+    </main>
 </body>
 
 </html>

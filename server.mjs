@@ -27,7 +27,7 @@ fastify.register(fastifyStatic, {
 
 fastify.get('/', async (_request, reply) => {
     try {
-        const filePath = join(__dirname, 'templates', 'index.html');
+        const filePath = join(__dirname, 'templates', 'boleto.html');
         const content = await fs.promises.readFile(filePath, 'utf8');
         return reply.type('text/html').send(content);
     } catch (error) {

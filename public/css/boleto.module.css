@@ -1,0 +1,108 @@
+body {
+    font-size: 0.7rem;
+}
+
+article {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 7.5px;
+    gap: 10px;
+    border: 1px solid #353535;
+}
+
+section {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border: 1px solid #353535;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.start {
+    justify-content: flex-start;
+}
+
+.end {
+    justify-content: flex-end;
+}
+
+.weight {
+    font-weight: 900;
+}
+
+.boleto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+}
+
+.container {
+    width: 950px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.boleto-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.boleto-header {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 3fr;
+    font-size: 1rem;
+}
+
+.boleto-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.boleto-body {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.grid-1 {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
+}
+
+.boleto-footer {
+    width: 100%;
+    height: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 7.5px;
+    border: 1px solid black;
+}
+
+.boleto-division {
+    margin: 70px 0px;
+    border: 2px dashed #353535;
+}
