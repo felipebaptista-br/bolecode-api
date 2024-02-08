@@ -4,9 +4,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/css/boleto.module.css">
-    <link rel="stylesheet" href="../public/css/global.css">
-    <title>Boleto</title>
+    <title>BOLETO ITAÚ</title>
+
+    <style>
+        :root {
+            --primary: #EC6F01;
+            --secondary: #F36F00;
+            --background: #171717;
+            --box-shadow: rgba(236, 111, 1, 1);
+            --black: #000;
+            --white: #FFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ui-button {
+            cursor: pointer;
+            padding: 1rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            color: var(--white);
+            background-color: var(--primary);
+        }
+
+        .ui-button:hover {
+            opacity: 0.8;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.7rem;
+        }
+
+        article {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 7.5px;
+            gap: 10px;
+            border: 1px solid #353535;
+        }
+
+        section {
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+            border: 1px solid #353535;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .start {
+            justify-content: flex-start;
+        }
+
+        .end {
+            justify-content: flex-end;
+        }
+
+        .weight {
+            font-weight: 900;
+        }
+
+        .boleto {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem;
+        }
+
+        .container {
+            width: 950px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .boleto-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .boleto-header {
+            width: 100%;
+            height: auto;
+            display: grid;
+            grid-template-columns: 1fr 0.5fr 3fr;
+            font-size: 1rem;
+        }
+
+        .boleto-logo {
+            width: 30px;
+            height: 30px;
+        }
+
+        .boleto-body {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .grid-1 {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
+        }
+
+        .boleto-footer {
+            width: 100%;
+            height: 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 7.5px;
+            border: 1px solid black;
+        }
+
+        .boleto-division {
+            margin: 70px 0px;
+            border: 2px dashed #353535;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,7 +158,9 @@
             <div class="boleto-container">
                 <div class="boleto-header">
                     <article>
-                        <img class="boleto-logo" src="../public/imgs/logo-itau.png" alt="Logo Itaú">
+                        <img class="boleto-logo"
+                            src="https://upload.wikimedia.org/wikipedia/commons/1/19/Ita%C3%BA_Unibanco_logo_2023.svg"
+                            alt="Logo Itaú">
                         <p>Banco Itaú S.A.</p>
                     </article>
                     <article class="weight">
@@ -48,12 +189,16 @@
                                                 <%= data.beneficiario.endereco.numero_CEP %>
                         </article>
                         <div class="grid-1">
-                            <article class="">Data do documento: <%= data.dado_boleto.data_emissao %>
+                            <article class="">Data do documento: <span name="date_format">
+                                    <%= data.dado_boleto.data_emissao %>
+                                </span>
                             </article>
                             <article class="">No. Do documento</article>
                             <article class="">Espécie doc. ME</article>
                             <article class="">Aceite: A</article>
-                            <article>Data Processamento: <%= data.dado_boleto.data_emissao %>
+                            <article>Data Processamento: <span name="date_format">
+                                    <%= data.dado_boleto.data_emissao %>
+                                </span>
                             </article>
                         </div>
                         <div class="grid-2">
@@ -76,7 +221,9 @@
                         </section>
                     </div>
                     <div class="boleto-body-right">
-                        <article>Vencimento: <%= data.dado_boleto.dados_individuais_boleto[0].data_vencimento %>
+                        <article>Vencimento: <span name="date_format">
+                                <%= data.dado_boleto.dados_individuais_boleto[0].data_vencimento %>
+                            </span>
                         </article>
                         <article>Agência/Código Beneficiário</article>
                         <article></article>
@@ -115,7 +262,9 @@
             <div class="boleto-container">
                 <div class="boleto-header">
                     <article>
-                        <img class="boleto-logo" src="../public/imgs/logo-itau.png" alt="Logo Itaú">
+                        <img class="boleto-logo"
+                            src="https://upload.wikimedia.org/wikipedia/commons/1/19/Ita%C3%BA_Unibanco_logo_2023.svg"
+                            alt="Logo Itaú">
                         <p>Banco Itaú S.A.</p>
                     </article>
                     <article class="weight">
@@ -144,12 +293,16 @@
                                                 <%= data.beneficiario.endereco.numero_CEP %>
                         </article>
                         <div class="grid-1">
-                            <article class="">Data do documento: <%= data.dado_boleto.data_emissao %>
+                            <article class="">Data do documento: <span name="date_format">
+                                    <%= data.dado_boleto.data_emissao %>
+                                </span>
                             </article>
                             <article class="">No. Do documento</article>
                             <article class="">Espécie doc. ME</article>
                             <article class="">Aceite: A</article>
-                            <article>Data Processamento: <%= data.dado_boleto.data_emissao %>
+                            <article>Data Processamento: <span name="date_format">
+                                    <%= data.dado_boleto.data_emissao %>
+                                </span>
                             </article>
                         </div>
                         <div class="grid-2">
@@ -172,7 +325,9 @@
                         </section>
                     </div>
                     <div class="boleto-body-right">
-                        <article>Vencimento: <%= data.dado_boleto.dados_individuais_boleto[0].data_vencimento %>
+                        <article>Vencimento: <span name="date_format">
+                                <%= data.dado_boleto.dados_individuais_boleto[0].data_vencimento %>
+                            </span>
                         </article>
                         <article>Agência/Código Beneficiário</article>
                         <article></article>

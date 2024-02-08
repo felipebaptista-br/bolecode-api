@@ -6,6 +6,12 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+/**
+ * Create a view template for an invoice.
+ *
+ * @param {Object} invoice - The invoice object
+ * @return {Promise<string>} The rendered invoice template
+ */
 export async function createViewTemplateInvoice(invoice) {
     try {
         const filePath = join(__dirname, '../templates', 'boleto.html');
